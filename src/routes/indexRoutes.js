@@ -1,22 +1,12 @@
 let express = require('express');
 let indexRoutes = express.Router();
 let User = require('../models/user');
-
-var isAuthenticated = function (req, res, next) {
-  if (req.isAuthenticated())
-    return next();
-  console.log('not authenticated yet');
-  res.redirect('/');
-}
+let indexController = require('../controllers/indexController')
 
 indexRoutes.route('/')
-  .get((req, res) => {
-    res.render('index');
-  });
+  .get(indexController.renderIndex);
 
 indexRoutes.route('/home')
-  .get(isAuthenticated, (req, res) => {
-    res.send('hello there')
-  })
+  .get(indexController.renderHome);
 
 module.exports = indexRoutes;
