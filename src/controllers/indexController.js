@@ -11,9 +11,12 @@ module.exports = {
     res.render('index');
   },
 
-  renderHome(isAuthenticated, req, res) {
-    res.send('hello there')
-  }
+  renderHome(req, res) {
+    res.render('home');
+  },
 
+  renderSignUp(req, res) {
+    res.render('register');
+  }
 
 }

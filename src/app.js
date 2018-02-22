@@ -2,8 +2,7 @@ let express = require('express');
 let mongoose = require('mongoose');
 let path = require('path');
 let User = require('./models/user');
-let indexRoutes = require('./routes/indexRoutes');
-
+let bodyParser = require('body-parser');
 let app = express();
 
 // Configuring db connection
@@ -16,6 +15,9 @@ let db = mongoose.connect('mongodb://localhost:27017/twitter-clone', (err) => {
 // Set view engine to EJS
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Configuring Passport
 let passport = require('passport');
@@ -33,15 +35,8 @@ app.use(flash());
 var initPassport = require('./passport/init');
 initPassport(passport);
 
+// Define router
+let indexRoutes = require('./routes/indexRoutes')(passport);
 app.use('/', indexRoutes);
-
-// app.get('/', (req, res) => {
-//   // res.send('Hello, I got here');
-//   User.find({}, (err, users) => {
-//     if (err) return console.log(err);
-//
-//     res.send(users);
-//   })
-// })
 
 module.exports = app;

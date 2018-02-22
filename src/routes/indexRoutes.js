@@ -1,12 +1,30 @@
 let express = require('express');
 let indexRoutes = express.Router();
 let User = require('../models/user');
-let indexController = require('../controllers/indexController')
+let indexController = require('../controllers/indexController');
 
-indexRoutes.route('/')
-  .get(indexController.renderIndex);
+module.exports = function(passport) {
 
-indexRoutes.route('/home')
-  .get(indexController.renderHome);
+  indexRoutes.route('/')
+    .get(indexController.renderIndex)
 
-module.exports = indexRoutes;
+  indexRoutes.route('/login')
+    .post(passport.authenticate('login', {
+      successRedirect: '/home',
+      failureRedirect: '/',
+      failureFlash: true
+    }));
+
+  indexRoutes.route('/home')
+    .get(indexController.isAuthenticated, indexController.renderHome);
+
+  indexRoutes.route('/signup')
+    .get(indexController.renderSignUp)
+    .post(passport.authenticate('signup', {
+      successRedirect: '/home',
+      failureRedirect: '/signup',
+      failureFlash: true
+    }));
+
+  return indexRoutes;
+}
