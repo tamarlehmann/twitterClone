@@ -26,5 +26,8 @@ module.exports = function(passport) {
       failureFlash: true
     }));
 
+  indexRoutes.route('/signout')
+    .get(indexController.signOut);
+
   return indexRoutes;
 }

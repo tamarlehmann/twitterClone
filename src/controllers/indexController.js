@@ -17,6 +17,11 @@ module.exports = {
 
   renderSignUp(req, res) {
     res.render('register');
+  },
+
+  signOut(req, res) {
+    req.logout();
+    res.redirect('/');
   }
 
 }
