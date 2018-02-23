@@ -11,10 +11,6 @@ module.exports = {
     res.render('index');
   },
 
-  renderHome(req, res) {
-    res.render('home');
-  },
-
   renderSignUp(req, res) {
     res.render('register');
   },

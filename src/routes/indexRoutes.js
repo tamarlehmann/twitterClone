@@ -10,18 +10,15 @@ module.exports = function(passport) {
 
   indexRoutes.route('/login')
     .post(passport.authenticate('login', {
-      successRedirect: '/home',
+      successRedirect: '/tweets',
       failureRedirect: '/',
       failureFlash: true
     }));
 
-  indexRoutes.route('/home')
-    .get(indexController.isAuthenticated, indexController.renderHome);
-
   indexRoutes.route('/signup')
     .get(indexController.renderSignUp)
     .post(passport.authenticate('signup', {
-      successRedirect: '/home',
+      successRedirect: '/tweets',
       failureRedirect: '/signup',
       failureFlash: true
     }));

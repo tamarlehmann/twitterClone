@@ -2,9 +2,30 @@
 <html lang=”en”>
   <% include ./partials/head %>
 <body>
-  <div style="width:50%; margin:0 auto;">
-    <a href="/signout">Sign Out</a>
-    <p>I got here<p>
+  <div style="width:50%; margin:0 auto; padding-top:40px">
+    <a href="/signout">Sign Out of <%= user %>'s account</a>
+    <br>
+    <form method="post" action="/tweets">
+      <p>
+        <label>Let us know what you're thinking...</label>
+        <br>
+        <textarea type="text" name="tweet_body" required></textarea>
+        <br>
+        <button type="submit" name="post_tweet">submit</button>
+      </p>
+    </form>
+    <br>
+    <br>
+    <br>
+    <div class="tweets">
+      <% for(var i=0; i < tweets.length; i++) { %>
+        <div class="tweet" style="border-style: solid; border-width: medium;border-color:grey">
+          <p><%= tweets[i].createdAt %></p>
+          <p><%= tweets[i].body %></p>
+          <p><%= tweets[i].postedBy %></p>
+        </div>
+      <% } %>
+    </div>
   </div>
 </body>
 </html>

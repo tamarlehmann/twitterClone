@@ -3,7 +3,10 @@ let mongoose = require('mongoose');
 let path = require('path');
 let User = require('./models/user');
 let bodyParser = require('body-parser');
+
+
 let app = express();
+
 
 // Configuring db connection
 let db = mongoose.connect('mongodb://localhost:27017/twitter-clone', (err) => {
@@ -35,8 +38,11 @@ app.use(flash());
 var initPassport = require('./passport/init');
 initPassport(passport);
 
-// Define router
+// Define routers
 let indexRoutes = require('./routes/indexRoutes')(passport);
 app.use('/', indexRoutes);
+
+let tweetRoutes = require('./routes/tweetRoutes');
+app.use('/tweets/', tweetRoutes);
 
 module.exports = app;
